@@ -17,24 +17,20 @@ namespace FamilyTree.Controllers
     public class PeopleController : ControllerBase
     {
         private readonly FamilyTreeDbContext _context;
+        public string _FamilyTree;
 
         public PeopleController(IOptions<ConnectionStringList> connectionStrings)
         {
             string FamilyTree = connectionStrings.Value.FamilyTree;
+            FamilyTree = _FamilyTree;
         }
 
         // GET: api/People
         [HttpGet]
-        public IEnumerable<Person> GetPerson()
+        public IEnumerable<Person> GetPerson(IOptions<ConnectionStringList> connectionStrings)
         {
-            
-            //return _personRepository.GetAllPeople();
-            return new[]
-            {
-                new Person {Id = 5126, FirstName = "Per"},
-                new Person {Id = 5127, FirstName = "Pål"},
-                new Person {Id = 5128, FirstName = "Espen"}
-            };
+            //var ctr = new PeopleController(connectionStrings);
+            return new PersonRepository(_FamilyTree).ReadAll();
         }
 
         // GET: api/People/5

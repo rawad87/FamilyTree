@@ -7,6 +7,6 @@ namespace FamilyTree
 {
     internal interface IPersonRepository
     {
-        bool InsertPerson
+        //bool InsertPerson
     }
 }
