@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FamilyTree
 {
-    public class Persons
+    public class ConnectionStringList
     {
         public string FamilyTree { get; set; }
     }

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FamilyTree;
 using FamilyTree.Models;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FamilyTree.Controllers
 {
@@ -16,16 +18,16 @@ namespace FamilyTree.Controllers
     {
         private readonly FamilyTreeDbContext _context;
 
-        public PeopleController(FamilyTreeDbContext context)
+        public PeopleController(IOptions<ConnectionStringList> connectionStrings)
         {
-            _context = context;
+            string FamilyTree = connectionStrings.Value.FamilyTree;
         }
 
         // GET: api/People
         [HttpGet]
         public IEnumerable<Person> GetPerson()
         {
-
+            
             //return _personRepository.GetAllPeople();
             return new[]
             {

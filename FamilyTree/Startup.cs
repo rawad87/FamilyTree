@@ -28,11 +28,11 @@ namespace FamilyTree
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddOptions();
+            services.Configure<ConnectionStringList>(Configuration.GetSection("ConnectionStrings"));
 
-            services.Configure<Persons>(Configuration.GetSection("ConnectionStrings"));
-
-            services.AddDbContext<FamilyTreeDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("FamilyTreeDbContext")));
+            //services.AddDbContext<FamilyTreeDbContext>(options =>
+            //        options.UseSqlServer(Configuration.GetConnectionString("FamilyTreeDbContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
