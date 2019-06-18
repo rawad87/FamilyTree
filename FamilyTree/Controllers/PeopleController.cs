@@ -27,7 +27,7 @@ namespace FamilyTree.Controllers
 
         // GET: api/People
         [HttpGet]
-        public IEnumerable<PersonRepository> GetPerson(IOptions<ConnectionStringList> connectionStrings)
+        public IEnumerable<PersonRepository> GetPerson()
         {
             return new PersonRepository(FamilyTreeConStr).ReadAll();
         }
