@@ -48,20 +48,8 @@ namespace FamilyTree.Controllers
 
         // PUT: api/People/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPerson([FromRoute] int id, [FromBody] Person person)
+        public async Task<int> PutPerson([FromRoute] int id, [FromBody] Person person)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != person.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(person).State = EntityState.Modified;
-
             var connection = new SqlConnection(FamilyTreeConStr);
             var rep = new PersonRepository(connection);
             var test = await rep.Create(new Person { FirstName = "test", LastName = "testy", PlaceOfBirth = "Africa", LifeStatus = "Dead", DateOfBirth = new DateTime(1789, 3, 22) });
