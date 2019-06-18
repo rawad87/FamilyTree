@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -22,14 +24,16 @@ namespace FamilyTree.Controllers
         public PeopleController(IOptions<ConnectionStringList> connectionStrings)
         {
             FamilyTreeConStr = connectionStrings.Value.FamilyTree;
-          
         }
 
         // GET: api/People
         [HttpGet]
-        public IEnumerable<PersonRepository> GetPerson()
+        public async Task<IEnumerable<Person>> GetPersonAsync()
         {
-            return new PersonRepository(FamilyTreeConStr).ReadAll();
+            var connection = new SqlConnection(FamilyTreeConStr);
+            var rep = new PersonRepository(connection);
+            var test = await rep.ReadAll();
+            return test;
         }
 
         // GET: api/People/5
