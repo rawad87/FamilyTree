@@ -17,10 +17,11 @@ namespace FamilyTree.Controllers
     public class PeopleController : ControllerBase
     {
         private readonly FamilyTreeDbContext _context;
+        public string FamilyTreeConStr;
 
         public PeopleController(IOptions<ConnectionStringList> connectionStrings)
         {
-            string FamilyTree = connectionStrings.Value.FamilyTree;
+            FamilyTreeConStr = connectionStrings.Value.FamilyTree;
           
         }
 
@@ -28,7 +29,7 @@ namespace FamilyTree.Controllers
         [HttpGet]
         public IEnumerable<PersonRepository> GetPerson(IOptions<ConnectionStringList> connectionStrings)
         {
-            return new PersonRepository().ReadAll();
+            return new PersonRepository(FamilyTreeConStr).ReadAll();
         }
 
         // GET: api/People/5
