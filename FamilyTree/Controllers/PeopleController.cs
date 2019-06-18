@@ -52,7 +52,8 @@ namespace FamilyTree.Controllers
         {
             var connection = new SqlConnection(FamilyTreeConStr);
             var rep = new PersonRepository(connection);
-            var test = await rep.Create(new Person { FirstName = "test", LastName = "testy", PlaceOfBirth = "Africa", LifeStatus = "Dead", DateOfBirth = new DateTime(1789, 3, 22) });
+            var test = await rep.Create(new Person {FirstName = "abc", LastName = "d", PlaceOfBirth = "Oslo", LifeStatus = "Alive", DateOfBirth = new DateTime(1789, 3, 22) });
+            person.Id = id;
             return test;
         }
 
@@ -68,7 +69,7 @@ namespace FamilyTree.Controllers
             _context.Person.Add(person);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPerson", new { id = person.Id }, person);
+            return CreatedAtAction("GetPersonAsync", new { id = person.Id }, person);
         }
 
         // DELETE: api/People/5
