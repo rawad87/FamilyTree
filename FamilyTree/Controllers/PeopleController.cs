@@ -59,38 +59,33 @@ namespace FamilyTree.Controllers
 
         // POST: api/People
         [HttpPost]
-        public async Task<IActionResult> PostPerson([FromBody] Person person)
+        public async Task<int> PostPerson([FromBody] Person person)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
-            _context.Person.Add(person);
-            await _context.SaveChangesAsync();
+            //_context.Person.Add(person);
+            //await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPersonAsync", new { id = person.Id }, person);
+            var connection = new SqlConnection(FamilyTreeConStr);
+            var rep = new PersonRepository(connection);
+            var test = await rep.Update(person);
+            return test;
+            //return CreatedAtAction("GetPersonAsync", new { id = person.Id }, person);
         }
 
         // DELETE: api/People/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePerson([FromRoute] int id)
+        public async Task<int> DeletePerson([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            var person = await _context.Person.FindAsync(id);
-            if (person == null)
-            {
-                return NotFound();
-            }
-
-            _context.Person.Remove(person);
-            await _context.SaveChangesAsync();
-
-            return Ok(person);
+            var connection = new SqlConnection(FamilyTreeConStr);
+            var rep = new PersonRepository(connection);
+            var test = await rep.Delete(null, id);
+            //person.Id = id;
+            return test;
         }
 
         private bool PersonExists(int id)

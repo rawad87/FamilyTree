@@ -83,7 +83,6 @@ namespace FamilyTree
         {
             var sql = @"Delete FROM PersonInfo
                            WHERE Id = @Id";
-
             return await _connection.ExecuteAsync(sql, person ?? (object)new { Id = id.Value });
 
         }
