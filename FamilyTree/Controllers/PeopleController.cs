@@ -62,23 +62,10 @@ namespace FamilyTree.Controllers
 
             _context.Entry(person).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PersonExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var connection = new SqlConnection(FamilyTreeConStr);
+            var rep = new PersonRepository(connection);
+            var test = await rep.Create(new Person { FirstName = "test", LastName = "testy", PlaceOfBirth = "Africa", LifeStatus = "Dead", DateOfBirth = new DateTime(1789, 3, 22) });
+            return test;
         }
 
         // POST: api/People
