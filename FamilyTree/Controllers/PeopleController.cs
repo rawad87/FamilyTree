@@ -38,21 +38,12 @@ namespace FamilyTree.Controllers
 
         // GET: api/People/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetPerson([FromRoute] int id)
+        public async Task<IEnumerable<Person>> GetPerson([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var person = await _context.Person.FindAsync(id);
-
-            if (person == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(person);
+            var connection = new SqlConnection(FamilyTreeConStr);
+            var rep = new PersonRepository(connection);
+            var test = await rep.ReadOneById(5125);
+            return test;
         }
 
         // PUT: api/People/5
